@@ -2,8 +2,8 @@ import {RevealOnScroll} from "../RevealOnScroll.jsx";
 
 export const About = () => {
 
-    const frontendSkills = ["React", "Vue","Vite","Svelte","Tailwindcss","TS"]
-    const backendSkills = ["NodeJS","PostgreSQL","ExpressJS","PHP"]
+    const frontendSkills = ["React", "Vue","Vite","Svelte","Tailwindcss","JavaScript","TypeScript"]
+    const backendSkills = ["NodeJS","mySQL","PostgreSQL","ExpressJS","PHP"]
     const otherSkills = ["Github","Git","NPM"]
 
     return (

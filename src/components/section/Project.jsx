@@ -36,7 +36,7 @@ export const Project = () => {
                             RecipeFlow is an AI-powered web application for searching, exploring, and recommending recipes with cooking tips.
                         </p>
                         <div>
-                            {["NodeJS"].map((tech, key) =>(
+                            {["React","TypeScript","mySQL","Tailwindcss"].map((tech, key) =>(
                                 <span
                                     key={key}
                                     className="bg-blue-500/10 text-blue-500 py-1 px-3 rounded text-sm hover:bg-blue-500/20 hover:shadow-[0_2px_8px_rgba(59,130,246,0.1)] transition-all"
@@ -46,7 +46,7 @@ export const Project = () => {
                             ))}
                         </div>
                         <div className="flex justify-center items-center">
-                            <a href="#" className="text-blue-400 hover:text-blue-300 transition-colors my-4">View Project &rarr; </a>
+                            <a href="https://github.com/asriqul/RecipeFlow" className="text-blue-400 hover:text-blue-300 transition-colors my-4">View Project &rarr; </a>
                         </div>
                     </div>
                     <div className="p-6 rounded-xl border border-white/10 hover:-translate-y-1 hover:border-blue-500/30 hover:shadow-[0_2px_rgba(59,130,246,0.2)] transition">
