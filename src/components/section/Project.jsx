@@ -35,11 +35,11 @@ export const Project = () => {
                         <p className="text-gray-400 mb-4">
                             RecipeFlow is an AI-powered web application for searching, exploring, and recommending recipes with cooking tips.
                         </p>
-                        <div>
+                        <div className="flex flex-wrap gap-2">
                             {["React","TypeScript","mySQL","Tailwindcss"].map((tech, key) =>(
                                 <span
                                     key={key}
-                                    className="bg-blue-500/10 text-blue-500 py-1 px-3 rounded text-sm hover:bg-blue-500/20 hover:shadow-[0_2px_8px_rgba(59,130,246,0.1)] transition-all"
+                                    className="bg-blue-500/10 text-blue-500 gap-3 py-1 px-3 rounded text-sm hover:bg-blue-500/20 hover:shadow-[0_2px_8px_rgba(59,130,246,0.1)] transition-all"
                                 >
                                     {tech}
                                 </span>
