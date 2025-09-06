@@ -1,7 +1,7 @@
-name: Test SSH Connection
+name: Test SSH via Cloudflare Tunnel
 
 on:
-  workflow_dispatch: # bisa dipicu manual dari tab Actions
+  workflow_dispatch:
 
 jobs:
   test-ssh:
@@ -13,6 +13,6 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-      - name: Test SSH Connection
+      - name: Test SSH Connection via Tunnel
         run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "echo '✅ SSH connection successful to $(hostname)'"
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@ssh.ashardi.dev "echo '✅ SSH via Cloudflare Tunnel successful on $(hostname)'"
