@@ -8,11 +8,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Setup SSH
-        uses: webfactory/ssh-agent@v0.9.0
-        with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-
-      - name: Test SSH Connection via Tunnel
+      - name: Install cloudflared
         run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@ssh.asrhardi.dev "echo '✅ SSH via Cloudflare Tunnel successful on $(hostname)'"
+          curl -L https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb -o cloudflared.deb
+          sudo dpkg -i cloudflared.deb
+
+      - name: Test SSH via Cloudflare Tunnel
+        run: |
+          cloudflared access ssh --hostname ssh.asrhardi.dev -- ssh -o StrictHostKeyChecking=no root@localhost "echo '✅ SSH via tunnel OK on $(hostname)'"
