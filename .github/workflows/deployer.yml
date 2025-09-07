@@ -14,13 +14,13 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      # 2. Install Node.js (untuk build kalau perlu di runner)
+      # 2. Install Node.js (optional kalau butuh build di runner)
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
 
-      # 3. Install cloudflared (biar bisa connect SSH via tunnel)
+      # 3. Install cloudflared (untuk ProxyCommand SSH)
       - name: Install cloudflared
         run: |
           curl -L https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64 -o cloudflared
@@ -28,16 +28,17 @@ jobs:
           sudo mv cloudflared /usr/local/bin/
           cloudflared --version
 
-      # 4. Setup SSH key untuk server
-      - name: Setup SSH
-        uses: webfactory/ssh-agent@v0.8.0
-        with:
-          ssh-private-key: ${{ secrets.SSH_KEY }}
+      # 4. Simpan private key dari GitHub Secrets
+      - name: Save SSH key
+        run: |
+          echo "${{ secrets.SSH_KEY }}" > gha_key
+          chmod 600 gha_key
 
-      # 5. Deploy ke home server via SSH (lewat cloudflared tunnel)
+      # 5. Deploy ke home server
       - name: Deploy to Home Server
         run: |
-          ssh -o StrictHostKeyChecking=no \
+          ssh -i gha_key \
+              -o StrictHostKeyChecking=no \
               -o ProxyCommand="cloudflared access ssh --hostname gha.asrhardi.dev" \
               ${{ secrets.SSH_USER }}@localhost "
                 set -e
