@@ -43,8 +43,9 @@ jobs:
               ${{ secrets.SSH_USER }}@localhost "
                 set -e
                 if [ ! -d ~/portfolio ]; then
-                  git clone https://github.com/<USERNAME>/<REPO>.git ~/portfolio
+                  git clone https://github.com/${{ github.repository }} ~/portfolio
                 fi
+  
                 cd ~/portfolio
                 git pull origin main
                 npm install
