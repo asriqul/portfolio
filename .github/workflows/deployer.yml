@@ -10,20 +10,43 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # 1. Checkout repo
       - name: Checkout repo
         uses: actions/checkout@v4
 
+      # 2. Install Node.js (untuk build kalau perlu di runner)
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      # 3. Install cloudflared (biar bisa connect SSH via tunnel)
+      - name: Install cloudflared
+        run: |
+          curl -L https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64 -o cloudflared
+          chmod +x cloudflared
+          sudo mv cloudflared /usr/local/bin/
+          cloudflared --version
+
+      # 4. Setup SSH key untuk server
       - name: Setup SSH
         uses: webfactory/ssh-agent@v0.8.0
         with:
           ssh-private-key: ${{ secrets.SSH_KEY }}
 
+      # 5. Deploy ke home server via SSH (lewat cloudflared tunnel)
       - name: Deploy to Home Server
         run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "
-            cd ~/portfolio || git clone git@github.com:<USERNAME>/<REPO>.git ~/portfolio && cd ~/portfolio &&
-            git pull origin main &&
-            npm install &&
-            npm run build &&
-            pm2 restart portfolio || pm2 start npm --name portfolio -- run start
-          "
+          ssh -o StrictHostKeyChecking=no \
+              -o ProxyCommand="cloudflared access ssh --hostname gha.asrhardi.dev" \
+              ${{ secrets.SSH_USER }}@localhost "
+                set -e
+                if [ ! -d ~/portfolio ]; then
+                  git clone https://github.com/<USERNAME>/<REPO>.git ~/portfolio
+                fi
+                cd ~/portfolio
+                git pull origin main
+                npm install
+                npm run build
+                pm2 restart portfolio || pm2 start npm --name portfolio -- run start
+              "
