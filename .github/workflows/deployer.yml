@@ -26,13 +26,20 @@ jobs:
           node-version: 20
           cache: 'npm'
 
-      # 3. Install dependencies dan build
+      # 3. Setup .env dari Repository Secrets
+      - name: Setup .env
+        run: |
+          echo "VITE_EMAILJS_SERVICE_ID=${{ secrets.EMAILJS_SERVICE_ID }}" >> .env
+          echo "VITE_EMAILJS_TEMPLATE_ID=${{ secrets.EMAILJS_TEMPLATE_ID }}" >> .env
+          echo "VITE_EMAILJS_PUBLIC_KEY=${{ secrets.EMAILJS_PUBLIC_KEY }}" >> .env
+
+      # 4. Install dependencies dan build
       - name: Build project
         run: |
           npm ci
           npm run build
 
-      # 4. Install cloudflared (untuk ProxyCommand SSH)
+      # 5. Install cloudflared (untuk ProxyCommand SSH)
       - name: Install cloudflared
         run: |
           curl -L https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64 -o cloudflared
@@ -40,20 +47,20 @@ jobs:
           sudo mv cloudflared /usr/local/bin/
           cloudflared --version
 
-      # 5. Save SSH key
+      # 6. Save SSH key
       - name: Save SSH key
         run: |
           echo "${{ secrets.SSH_KEY }}" > gha_key
           chmod 600 gha_key
 
-      # 6. Deploy dist ke server
+      # 7. Deploy dist ke server
       - name: Upload dist to server
         run: |
           rsync -avz --delete \
             -e "ssh -i gha_key -o StrictHostKeyChecking=no -o ProxyCommand='cloudflared access ssh --hostname ${{secrets.SSH_HOST}}'" \
             dist/ ${{ secrets.SSH_USER }}@localhost:~/portfolio/dist
 
-      # 7. Restart service (optional, kalau pakai pm2/nginx reload)
+      # 8. Restart web service (nginx reload)
       - name: Restart web service
         run: |
           ssh -i gha_key \
