@@ -50,7 +50,7 @@ jobs:
       - name: Upload dist to server
         run: |
           rsync -avz --delete \
-            -e "ssh -i gha_key -o StrictHostKeyChecking=no -o ProxyCommand='cloudflared access ssh --hostname gha.asrhardi.dev'" \
+            -e "ssh -i gha_key -o StrictHostKeyChecking=no -o ProxyCommand='cloudflared access ssh --hostname ${{secrets.SSH_HOST}}'" \
             dist/ ${{ secrets.SSH_USER }}@localhost:~/portfolio/dist
 
       # 7. Restart service (optional, kalau pakai pm2/nginx reload)
@@ -58,7 +58,7 @@ jobs:
         run: |
           ssh -i gha_key \
               -o StrictHostKeyChecking=no \
-              -o ProxyCommand="cloudflared access ssh --hostname gha.asrhardi.dev" \
+              -o ProxyCommand="cloudflared access ssh --hostname ${{secrets.SSH_HOST}}" \
               ${{ secrets.SSH_USER }}@localhost "
                 sudo systemctl reload nginx || true
               "
