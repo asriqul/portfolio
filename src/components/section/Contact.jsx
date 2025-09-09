@@ -1,24 +1,35 @@
 import {RevealOnScroll} from "../RevealOnScroll.jsx";
-import emailjs from '@emailjs/browser';
 import {useState} from "react";
-
 
 export const Contact = () => {
 
-    const [formData, setFormData] = useState({
-        name: "",
-        email: "",
-        message: ""
-    })
+    const [result, setResult] = useState("");
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
+    const accessKey = "a81b53f1-7fa6-4206-9544-d8ab375a476b";
 
-        emailjs.sendForm(import.meta.env.VITE_EMAILJS_SERVICE_ID, import.meta.env.VITE_EMAILJS_TEMPLATE_ID, e.target, import.meta.env.VITE_EMAILJS_PUBLIC_KEY).then(() => {
-            alert("Message sent successfully.");
-            setFormData({name: "", email: "", message: ""});
-        }).catch(() => alert("Oops! Something went wrong"));
-    }
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        setResult("Sending....");
+        const formData = new FormData(event.target);
+
+        formData.append("access_key", `${accessKey}`);
+
+        const response = await fetch("https://api.web3forms.com/submit", {
+            method: "POST",
+            body: formData
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            setResult("Form Submitted Successfully. Please check spam ");
+            event.target.reset();
+        } else {
+            console.log("Error", data);
+            setResult(data.message);
+        }
+    };
+
     return (
         <section
             id="contact"
@@ -30,18 +41,22 @@ export const Contact = () => {
                 </h2>
                 <form action="" className="space-y-6" onSubmit={handleSubmit}>
                     <div className="relative">
-                        <input type="text" id="name" name="name" required placeholder="Name " value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})} className="w-full bg-white/5 border border-white/10 rounded px-4 py-3 text-white transition focus:outline-none focus:border-blue-400 focus:bg-blue-500/5"/>
+                        <input type="text" id="name" name="name" required placeholder="Name "  className="w-full bg-white/5 border border-white/10 rounded px-4 py-3 text-white transition focus:outline-none focus:border-blue-400 focus:bg-blue-500/5"/>
                     </div>
                     <div className="relative">
-                        <input type="email" id="email" name="email" required placeholder="example@gmail.com" value={formData.email}  onChange={(e) => setFormData({...formData, email: e.target.value})} className="w-full bg-white/5 border border-white/10 rounded px-4 py-3 text-white transition focus:outline-none focus:border-blue-400 focus:bg-blue-500/5"/>
+                        <input type="hidden" name="access_key" value={accessKey} />
                     </div>
                     <div className="relative">
-                        <textarea id="message" name="message" required rows={7} placeholder="Your Message ..." value={formData.message} onChange={(e) => setFormData({...formData, message: e.target.value})} className="w-full bg-white/5 border border-white/10 rounded px-4 py-3 text-white transition focus:outline-none focus:border-blue-400 focus:bg-blue-500/5"/>
+                        <input type="email" id="email" name="email" required placeholder="example@gmail.com" className="w-full bg-white/5 border border-white/10 rounded px-4 py-3 text-white transition focus:outline-none focus:border-blue-400 focus:bg-blue-500/5"/>
+                    </div>
+                    <div className="relative">
+                        <textarea id="message" name="message" required rows={7} placeholder="Your Message ..."  className="w-full bg-white/5 border border-white/10 rounded px-4 py-3 text-white transition focus:outline-none focus:border-blue-400 focus:bg-blue-500/5"/>
                     </div>
                     <button type="submit" className="w-full bg-blue-500 text-white rounded py-3 px-6 font-medium transition relative overflow-hidden hover:-translate-y-0.5 hover:shadow-[0_0_15px_rgba(59,130,246,0.4)]">
                         Send Message
                     </button>
                 </form>
+                <span className={"flex items-center justify-center mt-4"}>{result}</span>
             </div>
             </RevealOnScroll>
         </section>
