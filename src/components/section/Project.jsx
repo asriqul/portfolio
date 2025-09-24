@@ -12,7 +12,7 @@ export const Project = () => {
                 </h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="p-6 rounded-xl border border-white/10 hover:-translate-y-1 hover:border-blue-500/30 hover:shadow-[0_2px_rgba(59,130,246,0.2)] transition">
-                        <h3 className="text-xl font-bold mb-2">ERC-20 Automation Batch Transfer</h3>
+                        <h3 className="text-xl font-bold mb-2">ERC-20 Automation Batch Transfer (Personal Project)</h3>
                         <p className="text-gray-400 mb-4">
                             Tea-batch-transfer is a nodejs application used to perform batch transfers of ethereum based erc20 tokens.
                         </p>
@@ -31,7 +31,7 @@ export const Project = () => {
                         </div>
                     </div>
                     <div className="p-6 rounded-xl border border-white/10 hover:-translate-y-1 hover:border-blue-500/30 hover:shadow-[0_2px_rgba(59,130,246,0.2)] transition">
-                        <h3 className="text-xl font-bold mb-2">RecipeFlow</h3>
+                        <h3 className="text-xl font-bold mb-2">RecipeFlow (Personal Project)</h3>
                         <p className="text-gray-400 mb-4">
                             RecipeFlow is an AI-powered web application for searching, exploring, and recommending recipes with cooking tips.
                         </p>

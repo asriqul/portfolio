@@ -67,17 +67,36 @@ export const About = () => {
                         <h3 className="text-xl font-bold mb-4">Experience</h3>
                         <div className="space-y-4 text-gray-300">
                             <div className="font-semibold">
-                                <h4>Software Engineer at PT HAHA HIHI (2012-present)</h4>
+                                <h4>-</h4>
                                 <p>
-                                    Developed all building in literally lorem
+                                    -
                                 </p>
                             </div>
                             <div className="font-semibold">
-                                <h4>Software Engineer at PT HAHA HIHI (2012-present)</h4>
+                                <h4>-</h4>
                                 <p>
-                                    Developed all building in literally lorem
+                                    -
                                 </p>
                             </div>
+                        </div>
+                    </div>
+                    <div className="p-6 rounded-xl border-white/10 border  transition-all">
+                        <h3 className="text-xl font-bold mb-4">Relevant Education</h3>
+                        <div className="space-y-4 text-gray-300">
+                            <div className="font-semibold">
+                                <h4>Dicoding Indonesia</h4>
+                                <ul className="list-disc list-inside space-y-2 mt-2">
+                                    <li>
+                                        Belajar dasar Pemrograman Web
+                                    </li>
+                                    <li>
+                                        Belajar dasar Pemrograman JavaScript
+                                    </li>
+                                    <li>
+                                        Belajar dasar visualisasi data
+                                    </li>
+                                </ul>
+                            </div>  
                         </div>
                     </div>
                 </div>
