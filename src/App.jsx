@@ -8,6 +8,7 @@ import {Project} from "./components/section/Project.jsx";
 import {Contact} from "./components/section/Contact.jsx";
 import {useState} from "react";
 import {Navbar} from "./components/Navbar.jsx";
+import { Footer } from './components/Footer.jsx';
 
 function App() {
     const [isLoaded, setIsLoaded] = useState(false)
@@ -23,6 +24,7 @@ function App() {
         <About/>
         <Project/>
         <Contact/>
+        <Footer/>
         </div>
     </>
     )
