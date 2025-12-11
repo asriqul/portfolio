@@ -14,7 +14,7 @@ export const Project = () => {
                     <div className="p-6 rounded-xl border border-white/10 hover:-translate-y-1 hover:border-blue-500/30 hover:shadow-[0_2px_rgba(59,130,246,0.2)] transition">
                         <h3 className="text-xl font-bold mb-2">ERC-20 Automation Batch Transfer (Personal Project)</h3>
                         <p className="text-gray-400 mb-4">
-                            Tea-batch-transfer is a nodejs application used to perform batch transfers of ethereum based erc20 tokens.
+                            batch-transfer is a nodejs application used to perform batch transfers of ethereum based erc20 tokens.
                         </p>
                         <div>
                             {["NodeJS"].map((tech, key) =>(

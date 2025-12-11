@@ -1,4 +1,3 @@
-import './App.css'
 import "./index.css"
 import {LoadingScreen} from "./components/LoadingScreen.jsx";
 import {MobileMenu} from "./components/MobileMenu.jsx";
